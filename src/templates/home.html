@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+    HOMEPAGE -- {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+    <p> Request promt </p>
+    {% include "snippets/welcome-user-snippets.html" %}
+
+    Total Page visit: {{ qs }}
+    Page visit : {{ queryset }}
+{% endblock content %}
