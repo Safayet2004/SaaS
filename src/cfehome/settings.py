@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import os
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,10 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6@%h15f%c4$*6+u7yf6jdy(qo9mw%3=flb76@t-$*de#6r_%g5'
+SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get('DEBUG')).lower() == 'true'
+# DEBUG = str(os.environ.get('DEBUG')).lower()=='true'
+
+DEBUG = config('DJANGO_DEBUG', cast=bool)
 
 print("DEBUG = ", DEBUG, type(DEBUG))
 
@@ -35,8 +37,7 @@ if DEBUG:
     ALLOWED_HOSTS += [
         "127.0.0.1",
         "localhost",
-    ]
-
+   ]
 
 # Application definition
 
@@ -89,6 +90,19 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+CONN_MAX_AGE = config('CONN_MAX_AGE', default=30, cast=int)
+DATABASE_URL = config("DATABASE_URL", default=None, cast=str)
+
+if DATABASE_URL is not None:
+    import dj_database_url
+    DATABASES = {
+    'default': dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=CONN_MAX_AGE,
+        conn_health_checks=True,
+        )
 }
 
 
