@@ -2,15 +2,16 @@
 <html lang="en">
     <head>
         <title>{% block head_title %}SaaS{% endblock head_title %}</title>
-        <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+        {% include "base/css.html" %}
     </head>
     <body>
+        {% include "nav/navbar.html" %}
+
         <h1> WE ARE IN BASE HTML </h1>
 
-
         {% block content %}
-
         {% endblock content %}
-        <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+        {% include "base/js.html" %}
     </body>
 </html>
