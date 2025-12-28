@@ -1,0 +1,26 @@
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logout</title>
+
+</head>
+<body>
+    <h2>Are you sure you want to log out?</h2>
+
+    {% if user.is_authenticated %}
+        <p>Logged in as {{ user.username }}</p>
+
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+
+        <a href="/">Cancel</a>
+    {% else %}
+        <p>You are already logged out.</p>
+        <a href="{% url 'account_login' %}">Login</a>
+    {% endif %}
+</body>
+</html>

@@ -4,6 +4,11 @@ from django.shortcuts import render
 
 from visits.models import PageVisit
 
+from allauth.account.views import LogoutView
+
+class CustomLogoutView(LogoutView):
+    template_name = "account/logout.html"
+
 this_dir = pathlib.Path(__file__).resolve().parent
 
 def home_page_view(request, *args, **kwargs):
