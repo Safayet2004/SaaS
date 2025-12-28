@@ -8,6 +8,8 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def home_page_view(request, *args, **kwargs):
 
+
+    print(request.user.is_authenticated, request.user)
     #A little confusion here
     qs = PageVisit.objects.all()
     queryset = PageVisit.objects.filter(path=request.path)
