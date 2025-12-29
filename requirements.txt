@@ -6,7 +6,7 @@ dj-database-url
 python-dotenv
 requests
 whitenoise
-django-allauth[socialaccount]
+django-allauth[socialaccount]==0.61.0
 django-allauth-ui
 django-widget-tweaks
 slippers
