@@ -1,0 +1,9 @@
+components:
+  container:
+    template: components/container.html
+
+  form_field:
+    template: components/form_field.html
+
+  form:
+    template: components/form.html

@@ -168,6 +168,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Django Allauth Config
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/login/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 ACCOUNT_AUTHENTICATION_METHOD = ('email')
 ACCOUNT_EMAIL_REQUIRED = True
