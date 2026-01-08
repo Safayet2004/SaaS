@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+    Users -- {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+    <h1 class="text-lg font-medium">{{ instance.username }}</h1>
+
+    {% if perms.auth or owner %}
+    <div>
+        {{ instance.last_login }}
+    </div>
+    {% else %}
+    <div>You are not allowed to see this</div>
+
+    {% endif %}
+
+{% endblock content %}

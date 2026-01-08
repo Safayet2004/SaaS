@@ -50,15 +50,15 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 DEBUG = config('DJANGO_DEBUG', cast=bool)
 
-ALLOWED_HOSTS = [
-    ".railway.app"
-]
+#ALLOWED_HOSTS = [
+#    ".railway.app"
+#]
 
-if DEBUG:
-    ALLOWED_HOSTS += [
-        "127.0.0.1",
-        "localhost",
-   ]
+#if DEBUG:
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+]
 
 # Application definition
 
@@ -69,8 +69,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'profiles',
     'visits',
     'commando',
+    'subscriptions',
     # third party apps
     "allauth_ui",
     'allauth',

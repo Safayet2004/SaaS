@@ -18,13 +18,22 @@ from django.contrib import admin
 from django.urls import path, include
 from auth import views as auth_views
 
-from .views import home_page_view, CustomLogoutView, pw_protected_view
+from .views import (
+    home_page_view,
+    CustomLogoutView, 
+    pw_protected_view,
+    user_only_view,
+    staff_only_view
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('profiles/', include('profiles.urls')),
     path('', home_page_view, name="home"),
     path('protected/', pw_protected_view),
+    path('protected/user-only/', user_only_view),
+    path('protected/staff-only/', staff_only_view),
     path('login/', auth_views.login_view, name="login"),
     path('accounts/logout/', CustomLogoutView.as_view(), name='account_logout'),
     path('register/', auth_views.register_view, name="register"),
