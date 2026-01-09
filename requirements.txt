@@ -10,3 +10,4 @@ django-allauth[socialaccount]==0.61.0
 django-allauth-ui
 django-widget-tweaks
 slippers
+stripe
