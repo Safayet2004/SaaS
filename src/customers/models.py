@@ -11,7 +11,7 @@ User = settings.AUTH_USER_MODEL
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    stripe_id = models.CharField(max_length=100, blank=True)
+    stripe_id = models.CharField(max_length=100, null=True, blank=True)
     init_email = models.EmailField(blank=True, null=True)
     init_email_confirmed = models.BooleanField(default=False)
 
@@ -22,7 +22,7 @@ class Customer(models.Model):
         if not self.stripe_id:
             if self.init_email and self.init_email_confirmed:
                 email = self.init_email
-                try:
+                if email != "" and email is not None:
                     stripe_id = helpers.billing.create_customer(
                         email=email,
                         metadata={
@@ -30,8 +30,6 @@ class Customer(models.Model):
                             "username": self.user.username
                         },raw=False)
                     self.stripe_id = stripe_id
-                except Exception as e:
-                    print(f"Stripe error: {e}")
         super().save(*args, **kwargs)
 
 
