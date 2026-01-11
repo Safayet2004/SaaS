@@ -34,7 +34,13 @@ class Subscription(models.Model):
     )
     stripe_id = models.CharField(max_length=100, blank=True, null=True)
 
+    order = models.IntegerField(default=-1, help_text="Orderding on django pricing page")
+    featured = models.BooleanField(default=True, help_text="Featured on Django pricing page")
+    updated = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
     class Meta:
+        ordering = ['order', 'featured', '-updated']
         permissions = SUBSCRIPTION_PERMISSIONS
 
     def __str__(self):
@@ -49,7 +55,6 @@ class Subscription(models.Model):
                 },raw=False)
             self.stripe_id = stripe_id
         super().save(*args, **kwargs)
-
 
 
 class SubscriptionPrice(models.Model):
@@ -100,9 +105,7 @@ class SubscriptionPrice(models.Model):
                 raw=False
             )
             self.stripe_id = stripe_id
-        super().save(*args, **kwargs)
-
-    
+        super().save(*args, **kwargs)    
 
 
 class UserSubscription(models.Model):
