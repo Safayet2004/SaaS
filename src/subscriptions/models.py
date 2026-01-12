@@ -1,3 +1,4 @@
+import re
 import helpers.billing
 from django.db import models
 from django.db.models.signals import post_save
@@ -38,10 +39,16 @@ class Subscription(models.Model):
     featured = models.BooleanField(default=True, help_text="Featured on Django pricing page")
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    features = models.TextField(help_text="List of features separated by comma", blank=True, null=True)
 
     class Meta:
         ordering = ['order', 'featured', '-updated']
         permissions = SUBSCRIPTION_PERMISSIONS
+
+    def get_features_as_list(self):
+        if not self.features:
+            return []
+        return [x.strip() for x in self.features.splitlines() if x.strip()]
 
     def __str__(self):
         return f"{self.name}"
@@ -70,10 +77,29 @@ class SubscriptionPrice(models.Model):
     interval = models.CharField(
         max_length=100, 
         default=IntervalChoices.MONTHLY, 
-        choices=IntervalChoices.choices
+        choices=IntervalChoices.choices # get_<field_name>_display
     )
     price = models.DecimalField(max_digits=10, decimal_places=2, default=99.99)
+    order = models.IntegerField(default=-1, help_text='Ordering on Django pricing page')
+    featured = models.BooleanField(default=True, help_text='Featured on Django pricing page')
+    updated = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['subscription__order', 'order', 'featured', '-updated']
+    
+    @property
+    def display_features_list(self):
+        if not self.subscription:
+            return []
+        return self.subscription.get_features_as_list()
+    
+    @property
+    def display_sub_name(self):
+        if not self.subscription:
+            return "Plan"
+        return self.subscription.name
+    
     @property
     def product_stripe_id(self):
         if not self.subscription:

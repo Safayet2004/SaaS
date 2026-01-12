@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from auth import views as auth_views
+from subscriptions import views as subscriptions_views
 
 from .views import (
     home_page_view,
@@ -35,7 +36,7 @@ urlpatterns = [
     path('protected/user-only/', user_only_view),
     path('protected/staff-only/', staff_only_view),
     path('login/', auth_views.login_view, name="login"),
-    path('accounts/logout/', CustomLogoutView.as_view(), name='account_logout'),
+    path('pricing/', subscriptions_views.subscription_price_view, name="pricing"),
     path('register/', auth_views.register_view, name="register"),
-    
+    path('accounts/logout/', CustomLogoutView.as_view(), name='account_logout'),
 ]
