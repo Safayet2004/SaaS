@@ -25,6 +25,7 @@ class Subscription(models.Model):
     """
 
     name = models.CharField(max_length=100)
+    subtitle = models.TextField(blank=True, null=True)
     active = models.BooleanField(default=True)
     groups = models.ManyToManyField(Group)
     permissions = models.ManyToManyField(Permission, 
@@ -99,6 +100,12 @@ class SubscriptionPrice(models.Model):
         if not self.subscription:
             return "Plan"
         return self.subscription.name
+    
+    @property
+    def display_sub_subtitle(self):
+        if not self.subscription:
+            return "Plan"
+        return self.subscription.subtitle
     
     @property
     def product_stripe_id(self):

@@ -37,6 +37,7 @@ urlpatterns = [
     path('protected/staff-only/', staff_only_view),
     path('login/', auth_views.login_view, name="login"),
     path('pricing/', subscriptions_views.subscription_price_view, name="pricing"),
+    path('pricing/<str:interval>/', subscriptions_views.subscription_price_view, name="pricing_interval"),
     path('register/', auth_views.register_view, name="register"),
     path('accounts/logout/', CustomLogoutView.as_view(), name='account_logout'),
 ]
