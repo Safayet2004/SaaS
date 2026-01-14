@@ -49,16 +49,16 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 # DEBUG = str(os.environ.get('DEBUG')).lower()=='true'
 
 DEBUG = config('DJANGO_DEBUG', cast=bool)
-
-#ALLOWED_HOSTS = [
-#    ".railway.app"
-#]
-
-#if DEBUG:
+BASE_URL = config('BASE_URL', default=None)
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
+    ".railway.app"
 ]
+
+if DEBUG:
+    ALLOWED_HOSTS = [
+        "127.0.0.1",
+        "localhost",
+    ]
 
 # Application definition
 
