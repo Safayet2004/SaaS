@@ -30,6 +30,8 @@ from .views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/billing/', subscriptions_views.user_subscription_view, name="user_subscription"),
+    path('accounts/billing/cancel', subscriptions_views.user_subscription_cancel_view, name="user_subscription_cancel"),
     path('accounts/', include('allauth.urls')),
     path('profiles/', include('profiles.urls')),
     path('', home_page_view, name="home"),
@@ -48,7 +50,7 @@ urlpatterns = [
         name="stripe-checkout-start"
         ),
     path('checkout/success/', 
-        checkout_views.checkout_success_finalize_view, 
+        checkout_views.checkout_finalize_view, 
         name="stripe-checkout-end"
         ),
     path('register/', auth_views.register_view, name="register"),
